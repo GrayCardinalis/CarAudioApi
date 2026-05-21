@@ -14,11 +14,6 @@ namespace CarAudioApi.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Указываем, что свойство LegacyBrand смотрит на колонку "brand"
-            modelBuilder.Entity<AudioComponent>()
-                .Property(a => a.LegacyBrand)
-                .HasColumnName("brand");
-
             modelBuilder.Entity<AudioComponent>()
                 .HasOne(c => c.Brand)// У компонента ОДИН бренд
                 .WithMany(b => b.Components)   // У бренда МНОГО компонентов

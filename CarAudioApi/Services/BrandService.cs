@@ -1,5 +1,6 @@
 ﻿using CarAudioApi.Data;
 using CarAudioApi.DTOs;
+using CarAudioApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarAudioApi.Services
@@ -12,18 +13,53 @@ namespace CarAudioApi.Services
         {
             _context = context;
         }
-        public Task<IEnumerable<BrandResponseDto>> GetAllAsync()
+        public async Task<IEnumerable<BrandResponseDto>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Brands
+                .AsNoTracking()
+                .Select(b => new BrandResponseDto
+                {
+                    Id = b.Id,
+                    FullName = b.Name,
+                    Description = b.Description
+                })
+                .ToListAsync();
         }
 
-        Task<BrandResponseDto?> IBrandService.GetByIdAsync(int id)
+        public async Task<BrandResponseDto?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Brands
+                .AsNoTracking()
+                .Where(b => b.Id == id)
+                .Select(b => new BrandResponseDto
+                {
+                    Id = b.Id,
+                    FullName = b.Name,
+                    Description = b.Description
+                })
+                .FirstOrDefaultAsync();
         }
-        Task<BrandResponseDto> IBrandService.CreateAsync(CreateBrandDto createDto)
+        public async Task<BrandResponseDto> CreateAsync(CreateBrandDto createDto)
         {
-            throw new NotImplementedException();
+            // Маппинг (перенос) данных из DTO в полноценную модель БД
+            var brand = new Brand
+            {
+                Name = createDto.Name,
+                Description = createDto.Description
+            };
+            // Добавляем в контекст. SQL-запрос INSERT пока НЕ выполняется
+            _context.Brands.Add(brand);
+
+            // Сохраняем транзакцию в PostgreSQL
+            await _context.SaveChangesAsync();
+
+            // Возвращаем клиенту красивый DTO, а не сырую модель
+            return new BrandResponseDto
+            {
+                Id = brand.Id,
+                FullName = brand.Name,
+                Description = brand.Description
+            };
         }
     }
 }

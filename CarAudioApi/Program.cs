@@ -17,6 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")).UseSnakeCaseNamingConvention());
 
 builder.Services.AddScoped<IAudioComponentService, AudioComponentService>();
+builder.Services.AddScoped<IBrandService, BrandService>();
 
 var app = builder.Build();
 

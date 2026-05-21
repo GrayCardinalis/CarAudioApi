@@ -4,7 +4,6 @@
     {
         public int Id { get; set; }
         // ВРЕМЕННО ВОЗВРАЩАЕМ старую колонку, чтобы не потерять данные
-        public string LegacyBrand { get; set; } = string.Empty;
         public int? BrandId{ get; set; }
         //Навигационное свойство
         public Brand? Brand { get; set; } = null!;
