@@ -1,5 +1,4 @@
-﻿using CarAudioApi.DTOs;
-namespace CarAudioApi.DTOs
+﻿namespace CarAudioApi.DTOs
 {
     public interface IAudioComponentService
     {

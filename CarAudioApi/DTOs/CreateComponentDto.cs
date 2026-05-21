@@ -2,10 +2,10 @@
 {
     public class CreateComponentDto
     {
-        //public string Brand { get; set; } = string.Empty;
-        public int BrandId { get; set; }
         public string Model { get; set; } = string.Empty;
         public string Type { get; set; } = string.Empty;
         public decimal RetailPrice { get; set; }
+        public int BrandId { get; set; }
+
     }
 }

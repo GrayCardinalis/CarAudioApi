@@ -1,5 +1,4 @@
 ﻿using CarAudioApi.DTOs;
-using CarAudioApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarAudioApi.Controllers
